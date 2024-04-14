@@ -23,9 +23,10 @@ use std::path::{Path, PathBuf};
 
 pub fn generate_docs_html<'a>(
     arena: &'a Bump,
-    pkg_name: &'a str,
+    pkg_name: &str,
     root_file: PathBuf,
     build_dir: impl AsRef<Path>,
+    user_specified_base_url: &str,
 ) -> Result<(), Problem> {
     let loaded_module = load_module_for_docs(root_file);
 
@@ -140,14 +141,16 @@ impl<'a>
     > for Annotation
 {
     fn visit<
+        'b,
+        'c,
         // visit functions
-        VisitAbility: Fn(slice::Iter<'a, AbilityMember<'a, Self>>, &'a mut String<'a>),
-        VisitAlias: Fn(slice::Iter<'a, &'a str>, &'a Self, &'a mut String<'a>),
-        VisitOpaque: Fn(slice::Iter<'a, &'a str>, slice::Iter<'a, AbilityAnn<'a>>, &'a mut String<'a>),
-        VisitValue: Fn(&'a Self, &'a mut String<'a>),
+        VisitAbility: Fn(slice::Iter<'a, AbilityMember<'a, Self>>, &'b mut String<'c>),
+        VisitAlias: Fn(slice::Iter<'a, &'a str>, &'a Self, &'b mut String<'c>),
+        VisitOpaque: Fn(slice::Iter<'a, &'a str>, slice::Iter<'a, AbilityAnn<'a>>, &'b mut String<'c>),
+        VisitValue: Fn(&'a Self, &'b mut String<'c>),
     >(
-        &self,
-        buf: &mut String<'_>,
+        &'a self,
+        buf: &'b mut String<'c>,
         visit_ability: VisitAbility,
         visit_type_alias: VisitAlias,
         visit_opaque_type: VisitOpaque,

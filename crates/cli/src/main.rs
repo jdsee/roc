@@ -236,9 +236,10 @@ fn main() -> io::Result<()> {
                 let user_specified_base_url = std::env::var("ROC_DOCS_URL_ROOT").ok();
                 let out_dir = out_dir.as_ref();
 
-                match roc_docs::generate(
+                match roc_docs_io::generate_docs_html(
                     &arena,
-                    root_path.as_path(),
+                    "DOCUMENTATION",
+                    root_path,
                     out_dir,
                     user_specified_base_url,
                 ) {
@@ -250,7 +251,7 @@ fn main() -> io::Result<()> {
                         );
                     }
                     Err(problem) => {
-                        use roc_docs::Problem::*;
+                        use roc_docs_io::Problem::*;
 
                         match problem {
                             FailedToLoadModule => todo!(),
