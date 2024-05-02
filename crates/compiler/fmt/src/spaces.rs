@@ -6,8 +6,8 @@ use roc_parse::{
         AbilityImpls, AbilityMember, AssignedField, Collection, CommentOrNewline, Defs, Expr,
         Header, Implements, ImplementsAbilities, ImplementsAbility, ImplementsClause, ImportAlias,
         ImportAsKeyword, ImportExposingKeyword, ImportedModuleName, IngestedFileImport, Module,
-        ModuleImport, Pattern, PatternAs, RecordBuilderField, Spaced, Spaces, StrLiteral,
-        StrSegment, Tag, TypeAnnotation, TypeDef, TypeHeader, ValueDef, WhenBranch,
+        ModuleImport, ModuleImportParams, Pattern, PatternAs, RecordBuilderField, Spaced, Spaces,
+        StrLiteral, StrSegment, Tag, TypeAnnotation, TypeDef, TypeHeader, ValueDef, WhenBranch,
     },
     header::{
         AppHeader, ExposedName, HostedHeader, ImportsEntry, KeywordItem, ModuleHeader, ModuleName,
@@ -599,8 +599,18 @@ impl<'a> RemoveSpaces<'a> for ModuleImport<'a> {
         ModuleImport {
             before_name: &[],
             name: self.name.remove_spaces(arena),
+            params: self.params.remove_spaces(arena),
             alias: self.alias.remove_spaces(arena),
             exposed: self.exposed.remove_spaces(arena),
+        }
+    }
+}
+
+impl<'a> RemoveSpaces<'a> for ModuleImportParams<'a> {
+    fn remove_spaces(&self, arena: &'a Bump) -> Self {
+        ModuleImportParams {
+            before: &[],
+            params: self.params.remove_spaces(arena),
         }
     }
 }
