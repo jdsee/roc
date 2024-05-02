@@ -879,8 +879,8 @@ mod cli_run {
     // tea = The Elm Architecture
     fn terminal_ui_tea() {
         test_roc_app(
-            "examples/cli",
-            "tui.roc",
+            "crates/cli/tests/tui",
+            "app.roc",
             &["foo\n"], // NOTE: adding more lines leads to memory leaks
             &[],
             &[],
@@ -961,7 +961,7 @@ mod cli_run {
             &[],
             format!(
                 "\nThis roc file can print its own source code. The source is:\n\n{}\n",
-                include_str!("../../../examples/cli/ingested-file.roc")
+                include_str!("cli/ingested-file.roc")
             )
             .as_str(),
             UseValgrind::No,
