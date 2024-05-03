@@ -979,7 +979,7 @@ mod cli_run {
             &[],
             &[],
             &[],
-            "31539\n",
+            "27101\n",
             UseValgrind::No,
             TestCliCommands::Run,
         )
