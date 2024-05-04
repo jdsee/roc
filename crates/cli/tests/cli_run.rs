@@ -1024,6 +1024,7 @@ mod cli_run {
         )
     }
 
+    #[ignore = "TODO restore this test - needs to have a build.roc platform files"]
     #[test]
     fn inspect_gui() {
         test_roc_app_slim("examples", "inspect-gui.roc", "", UseValgrind::No)
